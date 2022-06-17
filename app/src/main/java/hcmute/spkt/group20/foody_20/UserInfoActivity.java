@@ -43,13 +43,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserInfo;
-import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -185,18 +183,18 @@ public class UserInfoActivity extends AppCompatActivity implements OnMapReadyCal
         User user = new User();
         FirebaseUser u = FirebaseAuth.getInstance().getCurrentUser();
         for (UserInfo info : u.getProviderData()) {
-            user.setFullname(u.getDisplayName());
+            user.setFull_name(u.getDisplayName());
             user.setUid(u.getUid());
 
-            if (info.getProviderId().equals(getString(R.string.google))) {
-                user.setGmail(info.getEmail());
-            }
-            if (info.getProviderId().equals(getString(R.string.facebook))) {
-                user.setFacebook(Profile.getCurrentProfile().getId());
-            }
-            if (info.getProviderId().equals(getString(R.string.phone))) {
-                user.setPhone(info.getPhoneNumber());
-            }
+//            if (info.getProviderId().equals(getString(R.string.google))) {
+//                user.setGmail(info.getEmail());
+//            }
+//            if (info.getProviderId().equals(getString(R.string.facebook))) {
+//                user.setFacebook(Profile.getCurrentProfile().getId());
+//            }
+//            if (info.getProviderId().equals(getString(R.string.phone))) {
+//                user.setPhone(info.getPhoneNumber());
+//            }
         }
         return user;
     }

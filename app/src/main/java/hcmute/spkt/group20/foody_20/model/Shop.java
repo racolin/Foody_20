@@ -11,6 +11,7 @@ import java.util.Random;
 /*OK*/
 
 public class Shop implements Serializable {
+    private String shop_id;
     private String name;
     private ShopChain shop_chain; //
     private String shop_chain_id;
@@ -19,19 +20,21 @@ public class Shop implements Serializable {
     private String phone_number;
     private String address;
     private String image_src;
+    private List<String> user_save;
     private byte[] image; //
+    private int shared_count;
     private List<Meal> meals; //
-    private List<String> meals_id;
     private List<Shop> related_shops; //
 
     public Shop() {
 
     }
 
-    public Shop(String name, ShopChain shop_chain, String shop_chain_id, String time_open,
+    public Shop(String shop_id, String name, ShopChain shop_chain, String shop_chain_id, String time_open,
                 String description, String phone_number, String address, String image_src,
-                byte[] image, List<Meal> meals, List<String> meals_id, List<Shop> related_shops) {
+                byte[] image, int shared_count, List<String> user_save, List<Meal> meals, List<Shop> related_shops) {
         this.name = name;
+        this.shop_id = shop_id;
         this.shop_chain = shop_chain;
         this.shop_chain_id = shop_chain_id;
         this.time_open = time_open;
@@ -40,17 +43,39 @@ public class Shop implements Serializable {
         this.address = address;
         this.image_src = image_src;
         this.image = image;
+        this.user_save = user_save;
+        this.shared_count = shared_count;
         this.meals = meals;
-        this.meals_id = meals_id;
         this.related_shops = related_shops;
     }
 
-    public List<String> getMeals_id() {
-        return meals_id;
+    public List<String> getUser_save() {
+        return user_save;
     }
 
-    public void setMeals_id(List<String> meals_id) {
-        this.meals_id = meals_id;
+    public void setUser_save(List<String> user_save) {
+        this.user_save = user_save;
+    }
+
+    public int getShared_count() {
+        return shared_count;
+    }
+
+    public void setShared_count(int shared_count) {
+        this.shared_count = shared_count;
+    }
+
+    @Exclude
+    public int getSaved_count() {
+        return user_save != null ? user_save.size() : 0;
+    }
+
+    public String getShop_id() {
+        return shop_id;
+    }
+
+    public void setShop_id(String shop_id) {
+        this.shop_id = shop_id;
     }
 
     public String getShop_chain_id() {
@@ -73,6 +98,11 @@ public class Shop implements Serializable {
     public String getDistance() {
         Random rd = new Random();
         return String.valueOf(((int) (rd.nextFloat() * 10)) )+ "km";
+    }
+
+    @Exclude
+    public String getName(int limit) {
+        return name.length() <= limit ? name : name.substring(0, limit - 3) + "...";
     }
 
     public String getName() {
@@ -101,21 +131,13 @@ public class Shop implements Serializable {
         this.time_open = time_open;
     }
 
-    @Exclude
-    public float getRated() {
-        if (meals != null) {
-
-            float r = 0;
-            for (Meal meal : meals) {
-                r += meal.getRated();
-            }
-            return r / meals.size();
-        }
-        return 0;
-    }
-
     public String getDescription() {
         return description;
+    }
+
+    @Exclude
+    public String getDescription(int limit) {
+        return name.length() <= limit ? name : name.substring(0, limit - 3) + "...";
     }
 
     public void setDescription(String description) {

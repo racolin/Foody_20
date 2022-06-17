@@ -37,23 +37,19 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopHolder> {
     @Override
     public ShopHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.shop_item_2, parent, false);
-        ShopHolder holder = new ShopHolder(view);
-        view.setOnClickListener(v -> {
-            Intent intent = new Intent((HomeActivity) context, ShopActivity.class);
-            ((AppCompatActivity) context).startActivity(intent);
-        });
-        return holder;
+        return new ShopHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ShopHolder holder, int position) {
         holder.iv_shop.setImageBitmap(Support.convertBitmap(shops.get(position).getImage()));
         holder.tv_name.setText(shops.get(position).getName());
-        holder.tv_description.setText(shops.get(position).getDescription());
+        holder.tv_description.setText(shops.get(position).getDescription(30));
         holder.tv_distance.setText(shops.get(position).getDistance());
-        holder.tv_rated.setText(String.valueOf(shops.get(position).getRated()));
+
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, ShopChainActivity.class);
+            Intent intent = new Intent(context, ShopActivity.class);
+            shops.get(position).getShop_chain().setImage(null);
             intent.putExtra("shop", shops.get(position));
             (context).startActivity(intent);
         });
@@ -61,20 +57,19 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopHolder> {
 
     @Override
     public int getItemCount() {
-        return shops.size();
+        return shops == null ? 0 : shops.size();
     }
 
 
     protected class ShopHolder extends RecyclerView.ViewHolder {
         ImageView iv_shop;
-        TextView tv_name, tv_description, tv_distance, tv_rated;
+        TextView tv_name, tv_description, tv_distance;
 
         public ShopHolder(@NonNull View itemView) {
             super(itemView);
             iv_shop = itemView.findViewById(R.id.iv_shop);
             tv_name = itemView.findViewById(R.id.tv_name);
             tv_description = itemView.findViewById(R.id.tv_description);
-            tv_rated = itemView.findViewById(R.id.tv_rated);
             tv_distance = itemView.findViewById(R.id.tv_distance);
 
             DisplayMetrics metrics = new DisplayMetrics();

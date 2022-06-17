@@ -19,28 +19,6 @@
             android:clipToOutline="true"
             android:scaleType="centerCrop"
             />
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|top"
-            android:layout_margin="4dp">
-            <ImageView
-                android:layout_gravity="center"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/ic_saved_fill"
-                android:backgroundTint="@color/primary_400"
-                />
-            <TextView
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_rated"
-                android:text="5"
-                android:layout_marginBottom="2dp"
-                android:textStyle="bold"
-                android:textColor="@color/white"/>
-        </FrameLayout>
     </androidx.cardview.widget.CardView>
 
     <TextView
@@ -48,7 +26,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/card"
-        android:text="Thành Mập 1"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold" />
@@ -58,7 +35,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_name"
-        android:text="Quán cơm sáng trưa tối bình dân."
         android:textSize="10sp" />
 
     <TextView
@@ -67,7 +43,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_name"
         android:layout_alignParentRight="true"
-        android:text="2.3km"
         android:textColor="@color/secondary_800"
         android:textSize="10sp"
         android:textStyle="bold" />

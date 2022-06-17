@@ -19,9 +19,9 @@ public class SavedStateFragment extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                return new MealFragment(Support.getSavedMeals());
+                return new MealFragment(2);
             case 1:
-                return new ShopFragment(Support.getSavedShops());
+                return new ShopFragment();
             default:
                 return null;
         }

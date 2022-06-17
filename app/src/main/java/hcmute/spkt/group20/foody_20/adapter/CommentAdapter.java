@@ -35,10 +35,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
     @Override
     public void onBindViewHolder(@NonNull CommentHolder holder, int position) {
         holder.iv_avatar.setImageBitmap(Support.convertBitmap(comments.get(position).getUser().getImage()));
+        holder.tv_name.setText(comments.get(position).getUser().getFull_name());
+
         holder.tv_time.setText(Support.toDateString(comments.get(position).getTime_created(), "mm:hh dd/MM/yyyy"));
         holder.tv_comment_content.setText(comments.get(position).getDescription());
         holder.rb_rating.setRating(comments.get(position).getRate());
-        holder.tv_name.setText(comments.get(position).getUser().getFullname());
         holder.tv_feel.setText(Support.getRatingType(comments.get(position).getRate()));
     }
 

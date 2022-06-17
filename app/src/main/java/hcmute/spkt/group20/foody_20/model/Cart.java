@@ -8,24 +8,18 @@ import java.util.List;
 /*OK*/
 
 public class Cart implements Serializable {
-    private Shop shop;//
+    private List<CartItem> cart_items;
+    private String uid;
     private String shop_id;
-    private List<OrderItem> items;
+    private Shop shop;//
 
-    public Cart(Shop shop, List<OrderItem> items) {
-        this.shop = shop;
-        this.items = items;
+    public Cart() {
+
     }
 
-    public int getTotal_price() {
-        if (items != null) {
-            int r = 0;
-            for (OrderItem item : items) {
-                r += item.getMeal().getPrice();
-            }
-            return r;
-        }
-        return 0;
+    public Cart(List<CartItem> cart_items, String uid) {
+        this.cart_items = cart_items;
+        this.uid = uid;
     }
 
     public String getShop_id() {
@@ -33,7 +27,6 @@ public class Cart implements Serializable {
     }
 
     public void setShop_id(String shop_id) {
-//        load shop
         this.shop_id = shop_id;
     }
 
@@ -47,12 +40,42 @@ public class Cart implements Serializable {
         this.shop = shop;
     }
 
-    public List<OrderItem> getItems() {
-        return items;
+    public String getUid() {
+        return uid;
     }
 
-    public void setItems(List<OrderItem> items) {
-        this.items = items;
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    @Exclude
+    public int getTotal_price() {
+        if (cart_items != null) {
+            int r = 0;
+            for (CartItem item : cart_items) {
+                r += item.getMeal() == null ? 0 : item.getMeal().getPrice() * item.getAmount();
+            }
+            return r;
+        }
+        return 0;
+    }
+@Exclude
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "cart_items=" + cart_items +
+                ", uid='" + uid + '\'' +
+                ", shop_id='" + shop_id + '\'' +
+                ", shop=" + shop +
+                '}';
+    }
+
+    public List<CartItem> getCart_items() {
+        return cart_items;
+    }
+
+    public void setCart_items(List<CartItem> cart_items) {
+        this.cart_items = cart_items;
     }
 }
 

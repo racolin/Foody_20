@@ -1,39 +1,23 @@
 package hcmute.spkt.group20.foody_20.state_fragment;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import java.util.List;
-
-import hcmute.spkt.group20.foody_20.Support;
 import hcmute.spkt.group20.foody_20.fragment.MealFragment;
-import hcmute.spkt.group20.foody_20.model.Meal;
 
 public class HomeStateFragment extends FragmentStateAdapter {
-    List<Meal> near, outstanding;
-    MealFragment nearFragment, outstandingFragment;
-    public HomeStateFragment(@NonNull FragmentActivity fragmentActivity, List<Meal> near, List<Meal> outstanding) {
+
+    String key;
+
+    public HomeStateFragment(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
-        this.near = near;
-        this.outstanding = outstanding;
-        nearFragment = new MealFragment(near);
-        outstandingFragment = new MealFragment(outstanding);
+        key = "";
     }
-
-    public void setNear(List<Meal> near) {
-        this.near = near;
-        Log.d("rrr", "near");
-        nearFragment.updateData(near);
-    }
-
-    public void setOutstanding(List<Meal> outstanding) {
-        this.outstanding = outstanding;
-        Log.d("rrr", "outstanding");
-        outstandingFragment.updateData(outstanding);
+    public HomeStateFragment(@NonNull FragmentActivity fragmentActivity, String key) {
+        super(fragmentActivity);
+        this.key = key;
     }
 
     @Override
@@ -44,14 +28,7 @@ public class HomeStateFragment extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        switch (position) {
-            case 0:
-                return outstandingFragment;
-            case 1:
-                return nearFragment;
-            default:
-                return null;
-        }
+        return new MealFragment(position, key);
     }
 
     @Override

@@ -44,14 +44,14 @@
 
     <!--    Shop Activity -->
     <string name="shop_chain">Chuỗi cửa hàng:</string>
-    <string name="shop_rate">Thống kê từ các món ăn:</string>
+    <string name="shop_rate">Thống kê:</string>
     <string name="shop_description">Mô tả cửa hàng:</string>
     <string name="shop_list">Danh sách món ăn</string>
     <string name="shop_relate">Cửa hàng liên quan</string>
     <!--    Shop Activity -->
 
     <!--    Shop Chain Activity -->
-    <string name="chain_rate">Thống kê từ các cửa hàng:</string>
+    <string name="chain_rate">Thống kê:</string>
     <string name="chain_shop_count">Số cửa hàng:</string>
     <string name="chain_description">Mô tả chuỗi cửa hàng:</string>
     <string name="chain_list">Danh sách cửa hàng</string>

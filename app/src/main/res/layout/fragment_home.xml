@@ -40,6 +40,7 @@
                         android:background="@drawable/background_search">
 
                         <EditText
+                            android:id="@+id/et_search"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginStart="4dp"

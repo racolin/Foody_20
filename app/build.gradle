@@ -48,6 +48,7 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
     implementation 'com.google.firebase:firebase-storage'
     implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -2,7 +2,9 @@ package hcmute.spkt.group20.foody_20.model;
 
 import com.google.firebase.firestore.Exclude;
 
-public class CartItem {
+import java.io.Serializable;
+
+public class CartItem implements Serializable {
     private Meal meal;//
     private String meal_id;
     private int amount;
@@ -13,6 +15,11 @@ public class CartItem {
 
     public CartItem(Meal meal, String meal_id, int amount) {
         this.meal = meal;
+        this.meal_id = meal_id;
+        this.amount = amount;
+    }
+
+    public CartItem(String meal_id, int amount) {
         this.meal_id = meal_id;
         this.amount = amount;
     }
@@ -41,5 +48,15 @@ public class CartItem {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    @Exclude
+    @Override
+    public String toString() {
+        return "CartItem{" +
+                "meal=" + meal +
+                ", meal_id='" + meal_id + '\'' +
+                ", amount=" + amount +
+                '}';
     }
 }

@@ -224,8 +224,7 @@ public class HomeActivity extends AppCompatActivity {
                 FragmentTransaction transaction = manager.beginTransaction();
                 switch (item.getItemId()) {
                     case R.id.action_home:
-                        manager.popBackStack();
-                        transaction.addToBackStack(null);
+                        transaction.replace(R.id.fl_content, new HomeFragment());
                         break;
                     case R.id.action_notification:
                         transaction.replace(R.id.fl_content, new NotificationFragment());

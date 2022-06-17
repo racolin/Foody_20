@@ -38,12 +38,6 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealHolder> {
         return new MealHolder(view);
     }
 
-    public void update(List<Meal> meals) {
-        this.meals = meals;
-        Log.d("rrrmm", meals.get(meals.size() - 1).getName());
-        notifyItemInserted(meals.size() - 1);
-    }
-
     @Override
     public void onBindViewHolder(@NonNull MealHolder holder, int position) {
         holder.iv_meal.setImageBitmap(Support.convertBitmap(meals.get(position).getImage()));
@@ -54,6 +48,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealHolder> {
 
         holder.itemView.setOnClickListener((View v) -> {
             Intent intent = new Intent(context, MealActivity.class);
+            meals.get(position).getShop().setImage(null);
             intent.putExtra("meal", meals.get(position));
             (context).startActivity(intent);
         });
@@ -61,7 +56,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealHolder> {
 
     @Override
     public int getItemCount() {
-        return meals.size();
+        return meals == null ? 0 : meals.size();
     }
 
 

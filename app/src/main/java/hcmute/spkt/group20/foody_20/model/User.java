@@ -5,16 +5,14 @@ package hcmute.spkt.group20.foody_20.model;
 import com.google.firebase.firestore.Exclude;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 public class User implements Serializable {
     private String uid;
-    private String fullname;
+    private String full_name;
     private boolean gender;
-    private String DOB;
-    private String phone;
-    private String gmail;
-    private String facebook;
+    private Date dob;
     private String address;
 
     private List<Cart> carts; //
@@ -29,29 +27,25 @@ public class User implements Serializable {
     private List<Shop> shops_saved;//
     private List<String> shops_saved_id;
 
-    private List<Meal> meals_saved;
-    private List<String> meals_saved_id; //
+    private List<Meal> meals_saved;//
+    private List<String> meals_saved_id;
 
     private String image_src;
+
     private byte[] image;//
 
     public User() {
 
     }
 
-    public User(String uid, String fullname, boolean gender, String DOB, String phone,
-                String gmail, String facebook, String address, List<Cart> carts,
-                List<String> carts_id, List<Order> orders, List<String> orders_id,
-                List<Discount> person_discounts, List<Notification> person_notification,
-                List<Shop> shops_saved, List<String> shops_saved_id, List<Meal> meals_saved,
-                List<String> meals_saved_id, String image_src, byte[] image) {
+    public User(String uid, String full_name, boolean gender, Date dob, String address, List<Cart> carts,
+                List<String> carts_id, List<Order> orders, List<String> orders_id, List<Discount> person_discounts,
+                List<Notification> person_notification, List<Shop> shops_saved, List<String> shops_saved_id,
+                List<Meal> meals_saved, List<String> meals_saved_id, String image_src, byte[] image) {
         this.uid = uid;
-        this.fullname = fullname;
+        this.full_name = full_name;
         this.gender = gender;
-        this.DOB = DOB;
-        this.phone = phone;
-        this.gmail = gmail;
-        this.facebook = facebook;
+        this.dob = dob;
         this.address = address;
         this.carts = carts;
         this.carts_id = carts_id;
@@ -64,6 +58,32 @@ public class User implements Serializable {
         this.meals_saved = meals_saved;
         this.meals_saved_id = meals_saved_id;
         this.image_src = image_src;
+        this.image = image;
+    }
+
+    public String getFull_name() {
+        return full_name;
+    }
+
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
+    }
+
+    public String getImage_src() {
+        return image_src;
+    }
+
+    public void setImage_src(String image_src) {
+        this.image_src = image_src;
+    }
+
+    @Exclude
+    public byte[] getImage() {
+        return image;
+    }
+
+    @Exclude
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
@@ -153,7 +173,6 @@ public class User implements Serializable {
     }
 
     public void setMeals_saved_id(List<String> meals_saved_id) {
-//        loag meal
         this.meals_saved_id = meals_saved_id;
     }
 
@@ -165,14 +184,6 @@ public class User implements Serializable {
         this.uid = uid;
     }
 
-    public String getFullname() {
-        return fullname;
-    }
-
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
-
     public boolean isGender() {
         return gender;
     }
@@ -181,36 +192,12 @@ public class User implements Serializable {
         this.gender = gender;
     }
 
-    public String getDOB() {
-        return DOB;
+    public Date getDob() {
+        return dob;
     }
 
-    public void setDOB(String DOB) {
-        this.DOB = DOB;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getGmail() {
-        return gmail;
-    }
-
-    public void setGmail(String gmail) {
-        this.gmail = gmail;
-    }
-
-    public String getFacebook() {
-        return facebook;
-    }
-
-    public void setFacebook(String facebook) {
-        this.facebook = facebook;
+    public void setDob(Date dob) {
+        this.dob = dob;
     }
 
     public String getAddress() {
@@ -219,23 +206,5 @@ public class User implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getImage_src() {
-        return image_src;
-    }
-
-    public void setImage_src(String image_src) {
-        this.image_src = image_src;
-    }
-
-    @Exclude
-    public byte[] getImage() {
-        return image;
-    }
-
-    @Exclude
-    public void setImage(byte[] image) {
-        this.image = image;
     }
 }

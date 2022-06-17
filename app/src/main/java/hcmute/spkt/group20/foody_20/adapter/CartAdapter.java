@@ -38,8 +38,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
     public void onBindViewHolder(@NonNull CartHolder holder, int position) {
         holder.tv_distance.setText(carts.get(position).getShop().getDistance());
         holder.tv_total_price.setText(Support.toCurrency(carts.get(position).getTotal_price()));
-        holder.tv_shop_name.setText(carts.get(position).getShop().getName());
-        holder.rv_cart_item.setAdapter(new CartItemAdapter(context, carts.get(position).getItems()));
+        holder.tv_shop_name.setText(carts.get(position).getShop().getName(25));
+        holder.rv_cart_item.setAdapter(new CartItemAdapter(context, carts.get(position).getCart_items()));
         holder.rv_cart_item.setLayoutManager(new LinearLayoutManager(context));
         holder.btn_buy_now.setOnClickListener(v -> {
             Intent intent = new Intent(context, OrderActivity.class);

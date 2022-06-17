@@ -1,6 +1,7 @@
 package hcmute.spkt.group20.foody_20.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +16,14 @@ import java.util.List;
 
 import hcmute.spkt.group20.foody_20.R;
 import hcmute.spkt.group20.foody_20.Support;
+import hcmute.spkt.group20.foody_20.model.CartItem;
 import hcmute.spkt.group20.foody_20.model.OrderItem;
 
 public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartItemHolder> {
     Context context;
-    List<OrderItem> items;
+    List<CartItem> items;
 
-    public CartItemAdapter(Context context, List<OrderItem> items) {
+    public CartItemAdapter(Context context, List<CartItem> items) {
         this.items = items;
         this.context = context;
     }
@@ -37,9 +39,9 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
     @Override
     public void onBindViewHolder(@NonNull CartItemHolder holder, int position) {
         holder.iv_meal.setImageBitmap(Support.convertBitmap(items.get(position).getMeal().getImage()));
-        holder.tv_name.setText(items.get(position).getMeal().getName());
+        holder.tv_name.setText(items.get(position).getMeal().getName(40));
         holder.tv_price.setText(Support.toCurrency(items.get(position).getMeal().getPrice()));
-        holder.tv_amount.setText(items.get(position).getAmount());
+        holder.tv_amount.setText(String.valueOf(items.get(position).getAmount()));
         holder.ib_inc.setOnClickListener(v -> {
             holder.tv_amount.setText(
                     String.valueOf(Integer.valueOf(holder.tv_amount.getText().toString()) + 1)
@@ -53,7 +55,8 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
         });
         holder.ib_delete.setOnClickListener(v -> {
             items.remove(position);
-            notifyItemRemoved(position);
+//            a.checkChange();
+            notifyDataSetChanged();
         });
     }
 

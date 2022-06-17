@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 /*OK*/
 public class ShopChain implements Serializable {
+    private String shop_chain_id;
     private String name;
     private String description;
     private List<Shop> shops; //
-    private List<String> shops_id;
     private byte[] image;
     private String image_src;
 
@@ -18,11 +18,21 @@ public class ShopChain implements Serializable {
 
     }
 
-    public ShopChain(String name, String description, List<Shop> shops, List<String> shops_id) {
+    public ShopChain(String shop_chain_id, String name, String description, List<Shop> shops, byte[] image, String image_src) {
+        this.shop_chain_id = shop_chain_id;
         this.name = name;
         this.description = description;
         this.shops = shops;
-        this.shops_id = shops_id;
+        this.image = image;
+        this.image_src = image_src;
+    }
+
+    public String getShop_chain_id() {
+        return shop_chain_id;
+    }
+
+    public void setShop_chain_id(String shop_chain_id) {
+        this.shop_chain_id = shop_chain_id;
     }
 
     @Exclude
@@ -43,16 +53,13 @@ public class ShopChain implements Serializable {
         this.image_src = image_src;
     }
 
-    public List<String> getShops_id() {
-        return shops_id;
-    }
-
-    public void setShops_id(List<String> shops_id) {
-        this.shops_id = shops_id;
-    }
-
     public String getName() {
         return name;
+    }
+
+    @Exclude
+    public String getName(int limit) {
+        return name.length() <= limit ? name : name.substring(0, limit - 3) + "...";
     }
 
     public void setName(String name) {
@@ -60,20 +67,8 @@ public class ShopChain implements Serializable {
     }
 
     @Exclude
-    public float getRated() {
-        if (shops != null) {
-            int count = 0;
-            for (Shop shop : shops) {
-                count += shop.getRated();
-            }
-            return count / shops.size();
-        }
-        return 0;
-    }
-
-    @Exclude
     public int getShop_count() {
-        return shops == null ? 0 :shops.size();
+        return shops == null ? 0 : shops.size();
     }
 
     public String getDescription() {

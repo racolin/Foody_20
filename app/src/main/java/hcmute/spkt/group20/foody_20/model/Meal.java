@@ -9,6 +9,7 @@ import java.util.List;
 /*OK*/
 
 public class Meal implements Serializable {
+    private String meal_id;
     private String name;
     private Shop shop;//
     private String shop_id;
@@ -19,7 +20,7 @@ public class Meal implements Serializable {
     private int origin_price;
     private List<Discount> discounts;
     private List<Comment> comments;
-    private int saved_count;
+    private List<String> user_save;
     private int shared_count;
     private List<Meal> related_meals; //
 
@@ -27,11 +28,12 @@ public class Meal implements Serializable {
 
     }
 
-    public Meal(String name, Shop shop, String shop_id, String type, String description,
+    public Meal(String meal_id, String name, Shop shop, String shop_id, String type, String description,
                 byte[] image, String image_src, int origin_price,
-                List<Discount> discounts, List<Comment> comments, int saved_count,
+                List<Discount> discounts, List<Comment> comments, List<String> user_save,
                 int shared_count, List<Meal> related_meals) {
         this.name = name;
+        this.meal_id = meal_id;
         this.shop = shop;
         this.shop_id = shop_id;
         this.type = type;
@@ -40,10 +42,18 @@ public class Meal implements Serializable {
         this.image_src = image_src;
         this.origin_price = origin_price;
         this.discounts = discounts;
+        this.user_save = user_save;
         this.comments = comments;
-        this.saved_count = saved_count;
         this.shared_count = shared_count;
         this.related_meals = related_meals;
+    }
+
+    public String getMeal_id() {
+        return meal_id;
+    }
+
+    public void setMeal_id(String meal_id) {
+        this.meal_id = meal_id;
     }
 
     public String getShop_id() {
@@ -94,6 +104,11 @@ public class Meal implements Serializable {
         this.type = type;
     }
 
+    @Exclude
+    public String getName(int limit) {
+        return name.length() <= limit ? name : name.substring(0, limit - 3) + "...";
+    }
+
     public String getName() {
         return name;
     }
@@ -139,13 +154,13 @@ public class Meal implements Serializable {
     }
 
     @Exclude
-    public float getRated() {
+    public int getRated() {
         if (comments != null && comments.size() != 0) {
             float r = 0;
             for (Comment comment : comments) {
                 r += comment.getRate();
             }
-            return r / comments.size();
+            return (int) (r / comments.size());
         }
         return 5;
     }
@@ -180,16 +195,22 @@ public class Meal implements Serializable {
         this.comments = comments;
     }
 
+    @Exclude
     public int getSaved_count() {
-        return saved_count;
+        return user_save != null ? user_save.size() : 0;
     }
 
-    public void setSaved_count(int saved_count) {
-        this.saved_count = saved_count;
-    }
 
     public int getShared_count() {
         return shared_count;
+    }
+
+    public List<String> getUser_save() {
+        return user_save;
+    }
+
+    public void setUser_save(List<String> user_save) {
+        this.user_save = user_save;
     }
 
     public void setShared_count(int shared_count) {
@@ -215,7 +236,6 @@ public class Meal implements Serializable {
                 ", origin_price=" + origin_price +
                 ", discounts=" + discounts +
                 ", comments=" + comments +
-                ", saved_count=" + saved_count +
                 ", shared_count=" + shared_count +
                 ", related_meals=" + related_meals +
                 '}';

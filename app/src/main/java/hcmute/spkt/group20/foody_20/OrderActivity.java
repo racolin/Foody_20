@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -35,10 +37,11 @@ public class OrderActivity extends AppCompatActivity {
     Button btn_buy_now;
 
     ImageView iv_meal;
-    TextView tv_name, tv_price, tv_amount, tv_time;
+    TextView tv_price, tv_amount, tv_time;
     ImageButton ib_delete, ib_dec, ib_inc;
 
-    ImageButton ib_choose_time, ib_choose_date;
+    ImageButton ib_choose_time;
+    EditText et_phone, et_name;
 
     Cart cart;
 
@@ -63,8 +66,15 @@ public class OrderActivity extends AppCompatActivity {
     }
     
     public void initUI() {
-        tv_name = findViewById(R.id.tv_name);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        et_name = findViewById(R.id.et_name);
+        et_name.setText(auth.getCurrentUser().getDisplayName());
+        et_phone = findViewById(R.id.et_phone);
+        et_phone.setText(auth.getCurrentUser().getPhoneNumber());
+
         tv_price = findViewById(R.id.tv_price);
+
         tv_amount = findViewById(R.id.tv_amount);
         iv_meal = findViewById(R.id.iv_meal);
         ib_delete = findViewById(R.id.ib_delete);
@@ -80,7 +90,8 @@ public class OrderActivity extends AppCompatActivity {
         tv_distance.setText(cart.getShop().getDistance());
         tv_total_price.setText(Support.toCurrency(cart.getTotal_price()));
         tv_shop_name.setText(cart.getShop().getName());
-        rv_cart_item.setAdapter(new CartItemAdapter(this, cart.getItems()));
+        rv_cart_item.setAdapter(new CartItemAdapter(this, cart.getCart_items()));
+
         rv_cart_item.setLayoutManager(new LinearLayoutManager(this));
         btn_buy_now.setVisibility(View.GONE);
 
@@ -93,12 +104,8 @@ public class OrderActivity extends AppCompatActivity {
         calendar.add(Calendar.MINUTE, 30);
         hour = calendar.get(Calendar.HOUR);
         minute = calendar.get(Calendar.MINUTE);
-
-        ib_choose_date.setOnClickListener(v -> {
-
-        });
         ib_choose_time.setOnClickListener(v -> {
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+            DatePickerDialog datePickerDialog = new DatePickerDialog(OrderActivity.this,
                     new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
@@ -106,7 +113,7 @@ public class OrderActivity extends AppCompatActivity {
                             pick.set(Calendar.YEAR, i);
                             pick.set(Calendar.MONTH, i1);
                             pick.set(Calendar.DATE, i2);
-                            TimePickerDialog timePickerDialog = new TimePickerDialog(getApplicationContext(),
+                            TimePickerDialog timePickerDialog = new TimePickerDialog(OrderActivity.this,
                                     new TimePickerDialog.OnTimeSetListener() {
                                         @Override
                                         public void onTimeSet(TimePicker timePicker, int i, int i1) {
@@ -119,19 +126,15 @@ public class OrderActivity extends AppCompatActivity {
                                                 pick.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
                                                 pick.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
                                             }
-                                            tv_time.setText(Support.toDateString(pick, "mm:hh dd/MM/yyyy"));
+                                            tv_time.setText(Support.toDateString(pick, "hh:mm dd/MM/yyyy"));
                                         }
                                     }, hour, minute, true);
-                            datePicker.setMinDate(calendar.getTimeInMillis());
-                            calendar.add(Calendar.DATE, 3);
-                            datePicker.setMaxDate(calendar.getTimeInMillis());
                             timePickerDialog.show();
                         }
                     }, 2022, 5, 8);
             DatePicker datePicker = datePickerDialog.getDatePicker();
             datePicker.setMinDate(calendar.getTimeInMillis());
-            calendar.add(Calendar.DATE, 3);
-            datePicker.setMaxDate(calendar.getTimeInMillis());
+            datePicker.setMaxDate(calendar.getTimeInMillis() + 86400000*3);
             datePickerDialog.show();
         });
     }

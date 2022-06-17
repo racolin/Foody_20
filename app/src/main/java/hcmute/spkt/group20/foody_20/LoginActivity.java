@@ -214,7 +214,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginSuccess() {
-        Log.d("rrr", Profile.getCurrentProfile().getLinkUri().getPath());
         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
         startActivity(intent);
         finish();

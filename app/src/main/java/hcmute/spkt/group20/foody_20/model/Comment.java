@@ -26,12 +26,23 @@ public class Comment implements Serializable {
     }
 
     public String getUid() {
-        return user.getUid();
+        return uid;
     }
 
     public void setUid(String uid) {
 //        load user
         this.uid = uid;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "user=" + user +
+                ", uid='" + uid + '\'' +
+                ", time_created=" + time_created +
+                ", rate=" + rate +
+                ", description='" + description + '\'' +
+                '}';
     }
 
     @Exclude

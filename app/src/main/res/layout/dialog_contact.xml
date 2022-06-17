@@ -25,56 +25,70 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"/>
-    <RelativeLayout
+    <LinearLayout
         android:paddingVertical="4dp"
-        android:id="@+id/rl_content"
+        android:id="@+id/ll_content"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_marginVertical="4dp"
-            android:id="@+id/tv_shop_temp"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/contact_shop"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_shop_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="4dp"
-            android:layout_marginStart="4dp"
-            android:layout_toRightOf="@id/tv_shop_temp"
-            android:text="Thành Mập 1"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_marginVertical="4dp"
+                android:id="@+id/tv_shop_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/contact_shop"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_marginVertical="4dp"
-            android:layout_below="@id/tv_shop_name"
+            <TextView
+                android:id="@+id/tv_shop_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
+                android:layout_marginStart="4dp"
+                android:layout_toRightOf="@id/tv_shop_temp"
+                android:text="Thành Mập 1"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_phone_temp"
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:text="@string/contact_phone"/>
-        <TextView
-            android:layout_marginVertical="4dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0868754872"
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:id="@+id/tv_phone"
-            android:layout_marginStart="4dp"
-            android:layout_below="@id/tv_shop_temp"
-            android:layout_toRightOf="@id/tv_phone_temp"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_marginVertical="4dp"
+                android:layout_below="@id/tv_shop_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_phone_temp"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="@string/contact_phone"/>
+            <TextView
+                android:layout_marginVertical="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0868754872"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:id="@+id/tv_phone"
+                android:layout_marginStart="4dp"
+                android:layout_below="@id/tv_shop_temp"
+                android:layout_toRightOf="@id/tv_phone_temp"/>
+
+        </LinearLayout>
 
         <TextView
             android:layout_marginVertical="4dp"
@@ -93,7 +107,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_phone_temp"
             android:layout_marginVertical="4dp"
-            android:layout_marginStart="4dp"
             android:layout_toRightOf="@id/tv_address_label"
             android:text="KTX khu B, Đại học Quốc Gia TP.HCM"
             android:textColor="@color/black"
@@ -106,7 +119,7 @@
             android:layout_height="300dp"
             android:id="@+id/fm_map"
             android:name="com.google.android.gms.maps.SupportMapFragment"/>
-    </RelativeLayout>
+    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

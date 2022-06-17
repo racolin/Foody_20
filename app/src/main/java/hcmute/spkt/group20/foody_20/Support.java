@@ -88,7 +88,7 @@ public class Support {
 
     public static String toDateString(Calendar calendar, String fm) {
         SimpleDateFormat format = new SimpleDateFormat(fm);
-        return format.format(calendar);
+        return format.format(calendar.getTime());
     }
 
     public static Bitmap convertBitmap(byte[] bytes) {
@@ -145,98 +145,6 @@ public class Support {
         return notifications;
     }
 
-    public static void getOutstandingMeals(HomeStateFragment adapter) {
-        List<Meal> meals = new ArrayList<>();
-        StorageReference reference = FirebaseStorage.getInstance().getReference();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference shopRef = db.collection("shops");
-        db.collection("meals")
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                    }
-                })
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            int i = 0;
-                            for (DocumentSnapshot snapshot : task.getResult().getDocuments()) {
-                                final int count = i;
-                                reference.child(snapshot.get("image_src").toString())
-                                        .getBytes(1024 * 1024)
-                                        .addOnCompleteListener(new OnCompleteListener<byte[]>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<byte[]> task) {
-                                                if (task.isSuccessful()) {
-                                                    Meal m = snapshot.toObject(Meal.class);
-                                                    m.setImage(task.getResult());
-                                                    shopRef.document(m.getShop_id())
-                                                            .get()
-                                                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                                @Override
-                                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                                    if (task.isSuccessful()) {
-                                                                        m.setShop(task.getResult().toObject(Shop.class));
-                                                                        meals.add(m);
-                                                                        adapter.setOutstanding(meals);
-                                                                    }
-                                                                }
-                                                            });
-                                                }
-                                            }
-                                        });
-                                i++;
-                            }
-                        }
-                    }
-                });
-    }
-
-    public static void getNearMeals(HomeStateFragment adapter) {
-        List<Meal> meals = new ArrayList<>();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        StorageReference reference = FirebaseStorage.getInstance().getReference();
-        CollectionReference shopRef = db.collection("shops");
-        db.collection("meals").orderBy("origin_price")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            int i = 0;
-                            for (DocumentSnapshot snapshot : task.getResult().getDocuments()) {
-                                final int count = i;
-                                reference.child(snapshot.get("image_src").toString())
-                                        .getBytes(1024 * 1024)
-                                        .addOnCompleteListener(new OnCompleteListener<byte[]>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<byte[]> task) {
-                                                if (task.isSuccessful()) {
-                                                    Meal m = snapshot.toObject(Meal.class);
-                                                    m.setImage(task.getResult());
-                                                    shopRef.document(m.getShop_id())
-                                                            .get()
-                                                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                                @Override
-                                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                                    if (task.isSuccessful()) {
-                                                                        m.setShop(task.getResult().toObject(Shop.class));
-                                                                        meals.add(m);
-                                                                        adapter.setNear(meals);
-                                                                    }
-                                                                }
-                                                            });
-                                                }
-                                            }
-                                        });
-                                i++;
-                            }
-                        }
-                    }
-                });
-    }
 
     public static List<Meal> getSavedMeals() {
         List<Meal> meals = new ArrayList<>();
@@ -282,58 +190,6 @@ public class Support {
                     }
                 });
         return images;
-    }
-
-    public static void getSliders(SliderAdapter adapter) {
-        List<Slider> sliders = new ArrayList<>();
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference reference = storage.getReference();
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("sliders")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot snapshot : task.getResult()) {
-                                String img = snapshot.getData().get("src").toString();
-                                StorageReference image = reference.child(img);
-                                image.getBytes(1024 * 1024)
-                                        .addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                                            @Override
-                                            public void onSuccess(byte[] bytes) {
-                                                sliders.add(new Slider(bytes));
-                                                adapter.setSliders(sliders);
-                                            }
-                                        });
-                            }
-                        }
-                    }
-                });
-    }
-
-    public static List<String> getProvinces(ArrayAdapter<String> adapter) {
-        List<String> provinces = new ArrayList<>();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("provinces").orderBy("name", Query.Direction.ASCENDING)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot snapshot : task.getResult()) {
-                                provinces.add(snapshot.getData().get("name").toString());
-                                adapter.add(snapshot.getData().get("name").toString());
-                            }
-                        } else {
-
-                        }
-                    }
-                });
-        return provinces;
     }
 
     public static Byte[] toByteArray(byte[] bytes) {
